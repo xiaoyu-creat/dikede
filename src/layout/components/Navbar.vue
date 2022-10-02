@@ -2,26 +2,37 @@
   <div class="navbar">
     <!-- <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
 
-    <!-- <breadcrumb class="breadcrumb-container" /> -->
     <img class="logo" src="@/assets/common/logoone.png" alt="">
+    <!-- <breadcrumb class="breadcrumb-container" /> -->
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
+      <!-- <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="@/assets/common/user.png" class="user-avatar">
-          <!-- <img src="" alt=""> -->
-          退出：<i class="el-icon-caret-bottom" />
+          <div class="user-warper">
+            <img src="@/assets/common/user.png">
+            <span>欢迎您！admin</span>
+            <span @click="logout">退出</span>
+            <i class="el-icon-caret-bottom" />
+          </div>
+
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown> -->
+      <el-row>
+        <el-col :span="5">
+          <div class="avatar grid-content bg-purple">
+            <img src="@/assets/common/user.png">
+          </div>
+        </el-col>
+        <el-col :span="13">
+          <div class="grid-content bg-purple-light">
+            <span>欢迎您！{{ username }}</span>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="grid-content bg-purple" @click="logout">
+            <span>退出</span>
+            <i class="el-icon-caret-bottom" />
+          </div></el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -32,10 +43,14 @@ import { mapGetters } from 'vuex'
 // import Hamburger from '@/components/Hamburger'
 
 export default {
-  // components: {
-  //   Breadcrumb,
-  //   Hamburger
-  // },
+  components: {
+    // Hamburger
+  },
+  data() {
+    return {
+      username: this.$store.getters.name
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
@@ -48,7 +63,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login`)
     }
   }
 }
@@ -93,6 +108,12 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
+    width: 240px;
+    margin-right: 24px;
+    .loginout{
+      width: 50px;
+      padding-left: 20px;
+    }
 
     &:focus {
       outline: none;
@@ -118,17 +139,10 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
-
+      color: #fff;
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
 
         .el-icon-caret-bottom {
           cursor: pointer;
@@ -139,6 +153,9 @@ export default {
         }
       }
     }
+  }
+  .avatar{
+    margin-top: 8px;
   }
 }
 </style>

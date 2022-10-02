@@ -122,7 +122,7 @@ export default {
         await this.$store.dispatch('user/loginAction', this.loginForm)
         // 刷新验证码
         this.getPic()
-        this.$router.push('/dashboard')
+        this.$router.push('/')
       } catch (error) {
         this.$toast(error)
       } finally {

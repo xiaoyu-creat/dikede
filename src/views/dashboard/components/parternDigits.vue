@@ -11,9 +11,9 @@
         </el-col>
         <el-col :span="7">
           <div class="collect">
-            <div class="count">16</div>
+            <div class="count">{{nodeCount}}</div>
             <div class="name">点位数</div>
-            <div class="count count2">5</div>
+            <div class="count count2">{{partnerCount}}</div>
             <div class="name">合作商数</div>
           </div>
         </el-col>
@@ -23,8 +23,26 @@
 </template>
 
 <script>
+import {getPartnerCount,getNodeCount} from '@/api'
 export default {
-
+  data() {
+    return {
+      partnerCount:'',
+      nodeCount:''
+    }
+  },
+  mounted() {
+    this.getCollect()
+  },
+  methods: {
+    // 获取点位数和合作商数
+    async getCollect(){
+      const res = await getPartnerCount()
+      this.partnerCount = res.data
+      const {data} = await getNodeCount()
+      this.nodeCount = data
+    }
+  }
 }
 </script>
 

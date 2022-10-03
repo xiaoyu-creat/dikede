@@ -69,3 +69,23 @@ export const getAmountCollect = (collectType, start, end) => {
     url: `/order-service/report/amountCollect/${collectType}/${start}/${end}`
   })
 }
+
+/**
+ * 获取合作商总数
+ * @returns Promise
+ */
+export const getPartnerCount = () => {
+  return request({
+    url:'/user-service/partner/count'
+  })
+}
+
+/**
+ * 获取点位总数
+ * @returns Promise
+ */
+export const getNodeCount = () => { 
+  return request({
+    url:'/vm-service/node/count'
+  })
+}
